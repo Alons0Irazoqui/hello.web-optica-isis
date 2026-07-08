@@ -185,7 +185,7 @@
 
     var particles = [], w = 0, h = 0, dpr = 1, running = false;
     var mouse = { x: null, y: null };
-    var colors = ['#DEC17E', '#7B3FE4', '#3E6BE0', '#D6389B', '#2FB8A6'];
+    var colors = ['#D5709F', '#9B57A6', '#653270', '#E6A2C4', '#B6538A'];
 
     function resize() {
       var rect = hero.getBoundingClientRect();
@@ -241,7 +241,7 @@
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(q.x, q.y);
-            ctx.strokeStyle = 'rgba(222,193,126,' + (0.16 * (1 - dist / linkDist)) + ')';
+            ctx.strokeStyle = 'rgba(155,87,166,' + (0.22 * (1 - dist / linkDist)) + ')';
             ctx.lineWidth = 1;
             ctx.stroke();
           }
@@ -323,15 +323,13 @@
     var branchEl = document.getElementById('branch');
     var messageEl = document.getElementById('message');
 
-    var BRANCHES = {
-      matriz: {
-        name: 'Matriz — Xalapa-Enríquez, Ver.',
-        phone: null,
-        note: 'Nuestra sucursal Matriz (Av. Américas #257, Col. José Cardel, Xalapa) aún no cuenta con WhatsApp directo. Visítanos en sucursal o elige otra sucursal para escribirnos por este medio.'
-      },
-      gutierrez: { name: 'Gutiérrez Zamora, Ver.', phone: '527821048274' },
-      martinez: { name: 'Martínez de la Torre, Ver.', phone: '522321471631' },
-      tenosique: { name: 'Tenosique, Tab.', phone: '529341035330' }
+    var WHATSAPP_NUMBER = '522281942128';
+
+    var BRANCH_NAMES = {
+      matriz: 'Matriz — Xalapa-Enríquez, Ver.',
+      gutierrez: 'Gutiérrez Zamora, Ver.',
+      martinez: 'Martínez de la Torre, Ver.',
+      tenosique: 'Tenosique, Tab.'
     };
 
     function showAlert(msg) {
@@ -342,17 +340,17 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
-      var branch = BRANCHES[branchEl.value];
-      if (!branch || !branch.phone) {
-        showAlert((branch && branch.note) || 'Selecciona una sucursal con WhatsApp disponible para continuar.');
+      var branchName = BRANCH_NAMES[branchEl.value];
+      if (!branchName) {
+        showAlert('Selecciona una sucursal para continuar.');
         return;
       }
 
       var text = 'Hola Óptica Isis, mi nombre es ' + nameEl.value.trim() +
-        ' (tel. ' + phoneEl.value.trim() + '). Me interesa la sucursal ' + branch.name + '. ' +
+        ' (tel. ' + phoneEl.value.trim() + '). Me interesa la sucursal ' + branchName + '. ' +
         messageEl.value.trim();
 
-      var url = 'https://wa.me/' + branch.phone + '?text=' + encodeURIComponent(text);
+      var url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(text);
       window.open(url, '_blank', 'noopener');
 
       alertBox.hidden = true;
